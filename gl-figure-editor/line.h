@@ -16,6 +16,5 @@ private:
 	points_t<float> line_points;
 	uint lineVAO, lineVBO;
 	GLFWwindow* window;
-	int SCR_WIDTH, SCR_HEIGHT;
 };
 

@@ -6,11 +6,11 @@
 class Figure
 {
 public:
-	Figure(GLFWwindow* window);
-	Figure(GLFWwindow* window, const points_t<int>& points);
+	Figure(GLFWwindow* window, const points_t<int>& points = {});
 	void draw() const;
 	void update_last_point(const point<int>& mouse_pos);
 	void add_new_point(const point<int>& mouse_pos);
+	bool finished() const { return is_finished; }
 
 private:
 	GLFWwindow* window;

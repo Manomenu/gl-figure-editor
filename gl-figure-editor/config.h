@@ -12,9 +12,14 @@
 #include <vector>
 #include <memory>
 #include <exception>
+#include <math.h>
 
 typedef unsigned int uint;
 
+// settings
+const uint SCR_WIDTH = 1200;
+const uint SCR_HEIGHT = 800;
+const uint CLOSE_DISTANCE = 5;
 
 template<typename T = int>
 struct point
@@ -36,7 +41,10 @@ public:
     {
         return !(*this == p);
     }
-
+    bool close_to(const point<T>& p) const
+    {
+        return sqrt((x - p.x) * (x - p.x) + (y - p.y) * (y - p.y)) <= CLOSE_DISTANCE;
+    }
 };
 
 template<typename T>

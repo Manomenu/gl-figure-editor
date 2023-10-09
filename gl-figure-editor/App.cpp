@@ -20,35 +20,7 @@ void App::run()
     {
 		input_system->process_input();
 		render_system->update();
-        
-		if (interface_system->scene_mode_modified())
-		{
-			switch (interface_system->get_prev_scene_mode())
-			{
-			case View:
-				break;
-			case Create:
-				figure_handler->disable_figure_creation();
-				break;
-			case Edit:
-				break;
-			case Move:
-				break;
-			}
-
-			switch (interface_system->get_scene_mode())
-			{
-			case View:
-				break;
-			case Create:
-				figure_handler->enable_figure_creation();
-				break;
-			case Edit:
-				break;
-			case Move:
-				break;
-			}
-		}
+		interface_system->update_scene_mode();
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -57,7 +29,7 @@ void App::run()
 
 void App::make_systems()
 {
-	interface_system = std::make_shared<InterfaceSystem>();
+	interface_system = std::make_shared<InterfaceSystem>(figure_handler);
 	render_system = std::make_unique<RenderSystem>(interface_system, figure_handler);
 	input_system = std::make_unique<InputSystem>(window);
 }

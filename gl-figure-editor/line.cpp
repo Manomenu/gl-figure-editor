@@ -2,8 +2,6 @@
 
 Line::Line(GLFWwindow* window, const point<int>& start, const point<int>& end)
 {
-    glfwGetWindowSize(window, &SCR_WIDTH, &SCR_HEIGHT);
-
 	this->start = start;
 	this->end = end;
     line_points = points_t<float>();
@@ -41,7 +39,7 @@ void Line::draw() const
 
 void Line::update_end(const point<int>& mouse_pos)
 {
-    glfwGetWindowSize(window, &SCR_WIDTH, &SCR_HEIGHT); // might cause error
+    //glfwGetWindowSize(window, &SCR_WIDTH, &SCR_HEIGHT); // might cause error
     
     end = mouse_pos;
     if (start == end) // if it doent help, make stronger condtion, end shall be 10 pixels far from the start for ex

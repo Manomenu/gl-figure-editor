@@ -3,8 +3,6 @@
 DistinguishedPoint::DistinguishedPoint(GLFWwindow* window, const point<int>& p) : point(p)
 {
 	this->window = window;
-    int SCR_WIDTH, SCR_HEIGHT;
-    glfwGetWindowSize(window, &SCR_WIDTH, &SCR_HEIGHT);
     if (x < 0 || x > SCR_WIDTH || y < 0 || y > SCR_HEIGHT)
         throw std::invalid_argument("Invalid screen coordinates.\n");
 
@@ -41,9 +39,6 @@ void DistinguishedPoint::draw() const
 
 void DistinguishedPoint::update(const point<int> mouse_pos)
 {
-    int SCR_WIDTH, SCR_HEIGHT;
-    glfwGetWindowSize(window, &SCR_WIDTH, &SCR_HEIGHT); // might throw an error if called here id why
-
     pointVertex = point<float>(
         2.0f * mouse_pos.x / (float)SCR_WIDTH - 1.0f,
         1.0f - 2.0f * mouse_pos.y / (float)SCR_HEIGHT

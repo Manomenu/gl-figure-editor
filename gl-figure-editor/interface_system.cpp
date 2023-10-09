@@ -1,5 +1,10 @@
 #include "interface_system.h"
 
+InterfaceSystem::InterfaceSystem(std::shared_ptr<FigureHandler> figure_handler)
+	: figure_handler(figure_handler)
+{
+}
+
 InterfaceSystem::~InterfaceSystem()
 {
     ImGui_ImplOpenGL3_Shutdown();
@@ -25,13 +30,40 @@ void InterfaceSystem::draw_interface()
 
     ImGui::End();
 
-    render();
-}
-
-void InterfaceSystem::render()
-{
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void InterfaceSystem::update_scene_mode()
+{
+	if (scene_mode_modified())
+	{
+		switch (get_prev_scene_mode())
+		{
+		case View:
+			break;
+		case Create:
+			figure_handler->disable_figure_creation();
+			break;
+		case Edit:
+			break;
+		case Move:
+			break;
+		}
+
+		switch (get_scene_mode())
+		{
+		case View:
+			break;
+		case Create:
+			figure_handler->enable_figure_creation();
+			break;
+		case Edit:
+			break;
+		case Move:
+			break;
+		}
+	}
 }
 
 bool InterfaceSystem::scene_mode_modified()

@@ -11,6 +11,12 @@ void default_mouse_callback(GLFWwindow* window, double xpos, double ypos)
 	io.AddMousePosEvent(float(xpos), float(ypos));
 }
 
+void default_mouse_click_callback(GLFWwindow* window, int button, int action, int mods)
+{
+	ImGuiIO& io = ImGui::GetIO();
+	io.AddMouseButtonEvent(button, action == GLFW_PRESS);
+}
+
 FigureHandler::FigureHandler(GLFWwindow* window)
 {
 	this->window = window;
@@ -34,12 +40,13 @@ void FigureHandler::enable_figure_creation()
 {
 	add_figure();
 	glfwSetCursorPosCallback(window, control_latest_figure_point_callback);
-	//glfwSetMouseButtonCallback(window, new_point_on_click_callback);
+	glfwSetMouseButtonCallback(window, new_point_on_click_callback);
 }
 
 void FigureHandler::disable_figure_creation()
 {
 	glfwSetCursorPosCallback(window, default_mouse_callback);
+	glfwSetMouseButtonCallback(window, default_mouse_click_callback);
 	figures.pop_back();
 }
 
@@ -53,9 +60,11 @@ void FigureHandler::update_figures()
 		case ControlLastPoint:
 			figures[figure_to_update]->update_last_point(mouse_pos);
 			break;
-		//case AddNewPoint:
-		//	figures[figure_to_update]->add_new_point(mouse_pos); // deeper because it should also start creating another point if i close figure
-		//	break;
+		case AddNewPoint:
+			figures[figure_to_update]->add_new_point(mouse_pos);
+			if (figures[figure_to_update]->finished()) // deeper, because it should also start creating another point if edited figure has been closed
+				figures.push_back(std::make_unique<Figure>(window));
+			break;
 		}
 		
 		figure_to_update = -1;
@@ -82,7 +91,10 @@ void FigureHandler::new_point_on_click_callback(GLFWwindow* window, int button, 
 
 	if (!io.WantCaptureMouse)
 	{
-		figure_update_mode = AddNewPoint;
-		figure_to_update = figures.size() - 1;
+		if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+		{
+			figure_update_mode = AddNewPoint;
+			figure_to_update = figures.size() - 1;
+		}
 	}
 }
