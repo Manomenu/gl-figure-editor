@@ -9,7 +9,6 @@ class App
 public:
 	App(uint winX, uint winY);
 	~App();
-	void make_systems();
 	void run();
 	const std::shared_ptr<FigureHandler>& get_figure_handler() const { return figure_handler; }
 
@@ -24,6 +23,7 @@ private:
 	void set_up_imgui();
 	void set_up_opengl();
 	void make_handlers();
+	void make_systems();
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 };
 

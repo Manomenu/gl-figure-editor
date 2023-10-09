@@ -7,13 +7,16 @@ Line::Line(GLFWwindow* window, const point<int>& start, const point<int>& end)
 	this->start = start;
 	this->end = end;
     line_points = points_t<float>();
-    bresenham_line_alg();
 
     glGenVertexArrays(1, &lineVAO);
     glGenBuffers(1, &lineVBO);
     glBindVertexArray(lineVAO);
     glBindBuffer(GL_ARRAY_BUFFER, lineVBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(point<float>) * line_points.size(), &line_points[0], GL_STATIC_DRAW);
+    if (start != end) // if it doent help, make stronger condtion, end shall be 10 pixels far from the start for ex
+    {
+        bresenham_line_alg();
+        glBufferData(GL_ARRAY_BUFFER, sizeof(point<float>) * line_points.size(), &line_points[0], GL_STATIC_DRAW);
+    }
     glEnableVertexAttribArray(0);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(point<float>), (void*)0);
     glBindVertexArray(0);
@@ -27,14 +30,35 @@ Line::~Line()
 
 void Line::draw() const
 {
+    if (start == end) // if it doent help, make stronger condtion, end shall be 10 pixels far from the start for ex
+        return;
+
     glBindVertexArray(lineVAO);
     glPointSize(5);
     glDrawArrays(GL_POINTS, 0, line_points.size());
     glBindVertexArray(0);
 }
 
+void Line::update_end(const point<int>& mouse_pos)
+{
+    glfwGetWindowSize(window, &SCR_WIDTH, &SCR_HEIGHT); // might cause error
+    
+    end = mouse_pos;
+    if (start == end) // if it doent help, make stronger condtion, end shall be 10 pixels far from the start for ex
+        return;
+    
+    bresenham_line_alg();
+
+    glBindVertexArray(lineVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, lineVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(point<float>) * line_points.size(), &line_points[0], GL_STATIC_DRAW);
+    glBindVertexArray(0);
+}
+
 void Line::bresenham_line_alg()
 {
+    line_points.clear();
+
     int y1 = SCR_HEIGHT - start.y, y2 = SCR_HEIGHT - end.y;
     int x1 = start.x, x2 = end.x;
     int stepX = 1, stepY;

@@ -6,6 +6,7 @@ App::App(uint winX, uint winY)
 	set_up_imgui();
 	set_up_opengl();
 	make_handlers();
+	make_systems();
 }
 
 App::~App() 
@@ -20,6 +21,35 @@ void App::run()
 		input_system->process_input();
 		render_system->update();
         
+		if (interface_system->scene_mode_modified())
+		{
+			switch (interface_system->get_prev_scene_mode())
+			{
+			case View:
+				break;
+			case Create:
+				figure_handler->disable_figure_creation();
+				break;
+			case Edit:
+				break;
+			case Move:
+				break;
+			}
+
+			switch (interface_system->get_scene_mode())
+			{
+			case View:
+				break;
+			case Create:
+				figure_handler->enable_figure_creation();
+				break;
+			case Edit:
+				break;
+			case Move:
+				break;
+			}
+		}
+
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
@@ -91,3 +121,4 @@ void App::set_up_imgui()
 	ImGui_ImplGlfw_InitForOpenGL(window, true);          // Second param install_callback=true will install GLFW callbacks and chain to existing ones.
 	ImGui_ImplOpenGL3_Init("#version 330");
 }
+

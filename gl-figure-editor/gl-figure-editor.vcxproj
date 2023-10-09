@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="config.cpp" />
+    <ClCompile Include="distinguished_point.cpp" />
     <ClCompile Include="figure.cpp" />
     <ClCompile Include="figure_handler.cpp" />
     <ClCompile Include="glad.c" />
@@ -157,6 +158,7 @@
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="config.h" />
+    <ClInclude Include="distinguished_point.h" />
     <ClInclude Include="figure.h" />
     <ClInclude Include="figure_handler.h" />
     <ClInclude Include="imgui\imconfig.h" />

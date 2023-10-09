@@ -13,6 +13,7 @@ void RenderSystem::update()
 	glClear(GL_COLOR_BUFFER_BIT);
 	shader->use();
 
+	figure_handler->update_figures();
 	figure_handler->draw_figures();
 	interface_system->draw_interface(); // shall be last
 }

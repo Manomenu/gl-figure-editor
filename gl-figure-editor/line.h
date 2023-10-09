@@ -7,6 +7,7 @@ public:
 	Line(GLFWwindow* window, const point<int>& start, const point<int>& end);
 	~Line();
 	void draw() const;
+	void update_end(const point<int>& mouse_pos);
 
 private:
 	void bresenham_line_alg();
@@ -15,6 +16,6 @@ private:
 	points_t<float> line_points;
 	uint lineVAO, lineVBO;
 	GLFWwindow* window;
-	int SCR_HEIGHT, SCR_WIDTH;
+	int SCR_WIDTH, SCR_HEIGHT;
 };
 

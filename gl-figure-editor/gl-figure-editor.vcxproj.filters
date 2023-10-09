@@ -93,6 +93,9 @@
     <ClCompile Include="line.cpp">
       <Filter>Source Files\entities</Filter>
     </ClCompile>
+    <ClCompile Include="distinguished_point.cpp">
+      <Filter>Source Files\entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -150,6 +153,9 @@
       <Filter>Header Files\handlers</Filter>
     </ClInclude>
     <ClInclude Include="line.h">
+      <Filter>Header Files\entities</Filter>
+    </ClInclude>
+    <ClInclude Include="distinguished_point.h">
       <Filter>Header Files\entities</Filter>
     </ClInclude>
   </ItemGroup>
