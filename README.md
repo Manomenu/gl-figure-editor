@@ -1,6 +1,6 @@
 Description  
 ---
-Window application that allows user to create figures and edit them.
+Window application written in C++/OpenGL that allows user to create figures and edit them.
 
 Features  
 ---
